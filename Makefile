@@ -6,7 +6,7 @@
 # will be used.
 
 DOCKER = docker
-IMAGE = gewu4zhizhi/osx-kvm
+IMAGE = gewu4zhizhi/osx-kvm:ubuntu18.04
 VOL1 ?= $(HOME)/osx-kvm
 USER_ID := $(shell id -u)
 GROUP_ID := $(shell id -g)
@@ -15,7 +15,7 @@ osx-kvm: Dockerfile
 	$(DOCKER) build -t $(IMAGE) .
 
 test:
-	$(DOCKER) run -v "$(VOL1):/home/osx-kvm" -it -e USER_ID=$(USER_ID) -e GROUP_ID=$(GROUP_ID) $(IMAGE) /bin/bash
+	$(DOCKER) run --privileged -v "$(VOL1):/home/osx-kvm" -it -e USER_ID=$(USER_ID) -e GROUP_ID=$(GROUP_ID) $(IMAGE) /bin/bash
 
 all: osx-kvm
 
